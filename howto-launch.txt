@@ -1,0 +1,26 @@
+Please find sample app in compressed file :
+apm-imperative.zip
+Sampleapp quarkus (classical imperative libs)
+
+quarkus-app.zip
+
+Unzip it
+
+Launch app -> 
+In quarkus-app folder
+java -jar quarkus-run.jar (java 17 in our case)
+
+Application is listening on port 8080 and API is /v1/profileData
+It will always send an HTTP 400 response but :
+- if no header get_400 is set so the 400 will be generated outside of the controller
+- if a header get_400 is set with for example true value so the 400 will be generated inside the controller
+
+curl http://localhost:8080/v1/profileData/ 
+curl  curl -H "<header>" -H 'get_400: true'
+
+Please see PDF to find our screenshots / observations (open telemetry agent 1.27 -> elastic apm server as collector)
+
+The main difference is that transaction.name and transaction.name.text are "GET /" in case of 400 generated outside the controller and "GET /v1/profileData" inside it.
+url.* fields have same values
+
+Thanks for your help.
